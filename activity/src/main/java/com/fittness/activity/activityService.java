@@ -1,30 +1,39 @@
 package com.fittness.activity;
 
 import com.fittness.activity.Model.ActivityResponse;
-import com.fittness.activity.Model.activity;
+import com.fittness.activity.Model.Activity;
 import com.fittness.activity.Model.activityRequest;
 import com.fittness.activity.user.UserValidation;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
+@Slf4j
+@RequiredArgsConstructor
 @Service
 public class activityService {
 
     private final UserValidation uservalidation;
-    private activityRepository repo;
+    private final activityRepository repo;
+    private final RabbitTemplate rabbitTemplate;
 
+    @Value("${rabbitmq.exchange.name}")
+    private String exchange;
 
+    @Value("${rabbitmq.routing.key}")
+    private String routing;
 
 
     public ActivityResponse trackActivity(activityRequest request){
         boolean isValid=uservalidation.validateUser(request.getUserId());
         if (!isValid) {
             throw new RuntimeException("Invalid user");
-        }           activity actvty = activity.builder().
+        }           Activity actvty = Activity.builder().
                    userId(request.getUserId()).caloriesBurned(request.getCaloriesBurned())
                    .type(request.getType())
                    .startTime(request.getStartTime())
@@ -32,7 +41,17 @@ public class activityService {
                    .build();
 
         System.out.println("Exists? " + repo.findAll());
-    activity  savedActivity=repo.save(actvty);
+    Activity savedActivity=repo.save(actvty);
+    //publish to the RabbiMQ queue for AI processing
+        //producer
+
+        try{
+            rabbitTemplate.convertAndSend(exchange, routing, actvty);
+             log.info("rabbit service done");
+        }catch(Exception e){
+           log.error("failed to log activity");
+        }
+
         return ActivityResponse.builder()
                 .id(savedActivity.getId())
                 .userId(savedActivity.getUserId())
@@ -54,7 +73,7 @@ public class activityService {
                 .collect(Collectors.toList());
     }
 
-    private ActivityResponse mapToResponse(activity savedActivity) {
+    private ActivityResponse mapToResponse(Activity savedActivity) {
         return ActivityResponse.builder()
                 .id(savedActivity.getId())
                 .userId(savedActivity.getUserId())

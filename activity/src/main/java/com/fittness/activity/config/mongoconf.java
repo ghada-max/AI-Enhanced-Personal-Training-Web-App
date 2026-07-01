@@ -1,4 +1,4 @@
-package com.fittness.activity;
+package com.fittness.activity.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.EnableMongoAuditing;

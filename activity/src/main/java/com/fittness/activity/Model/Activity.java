@@ -19,7 +19,7 @@ import java.util.Map;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class activity {
+public class Activity {
     @Id
     private String id;
     private String userId;

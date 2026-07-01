@@ -1,11 +1,10 @@
-package com.fittness.aiservice.Model;
+package com.fittness.aiservice;
 
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.mongodb.core.mapping.*;
 
-import java.lang.annotation.Documented;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,7 +14,7 @@ import java.util.List;
 public class recommendation {
     private String id;
     private String activityId;
-    private String UserId;
+    private String userId;
     private String activityType;
     private String recommendation;
     private List<String> improvements;

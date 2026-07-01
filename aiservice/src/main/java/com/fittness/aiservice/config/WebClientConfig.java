@@ -1,4 +1,4 @@
-package com.fittness.aiservice.Model;
+package com.fittness.aiservice.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,5 +10,10 @@ public class WebClientConfig {
     @Bean
     public WebClient.Builder webClientBuilder() {
         return WebClient.builder();
+    }
+
+    @Bean
+    public WebClient webClient(WebClient.Builder builder) {
+        return builder.build();
     }
 }
