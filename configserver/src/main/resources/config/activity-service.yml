@@ -1,9 +1,6 @@
 server:
   port: 3347
 spring:
-  application:
-    name: activity
-
   data:
     url: mongodb://localhost:27017/fittnessApp
     database: activities

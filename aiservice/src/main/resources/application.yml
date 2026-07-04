@@ -1,27 +1,5 @@
 spring:
-   application:
-      name: aiservice
-
-   datasource:
-     url: mongodb://localhost:27017/fittnessApp
-     database: recommendation
-
-   rabbitmq:
-     host: localhost
-     port: 5672
-     username: guest
-     password: guest
-rabbitmq:
-  exchange:
-    name: fitness.exchange
-  queue:
-    name:  activities.queue
-  routing:
-    key: activity.tracking
-server:
-  port: 3348
-
-gemini:
-  api:
-    url: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=
-    key: AQ.Ab8RN6IBIjRxaUrf6Qkf6Ap110gp-NRymhlUSOBxNVo-YrNpvg
+  application:
+    name: ai-service
+  config:
+    import: optional:configserver:http://localhost:8888

@@ -1,29 +1,8 @@
 server:
   port: 3347
+
 spring:
   application:
-    name: activity
-
-  data:
-    url: mongodb://localhost:27017/fittnessApp
-    database: activities
-  rabbitmq:
-    host:  localhost
-    port:  5672
-    username: guest
-    password: guest
-
-  jpa:
-    hibernate:
-      ddl-auto: update
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-
-rabbitmq:
-  exchange:
-    name: fitness.exchange
-  queue:
-    name:  activities.queue
-  routing:
-    key: activity.tracking
-
-
+    name: activity-service
+  config:
+    import: optional:configserver:http://localhost:8888

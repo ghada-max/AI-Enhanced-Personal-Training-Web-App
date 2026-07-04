@@ -1,6 +1,5 @@
 spring:
-   application:
-      name: aiservice
+
 
    datasource:
      url: mongodb://localhost:27017/fittnessApp
