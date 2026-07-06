@@ -24,7 +24,9 @@ spring:
           uri: lb://AI-SERVICE
           predicates:
             - Path=/api/recommendations/**
-
+filter:
+  keycloak:
+    enabled: false
 
 server:
   port: 3499

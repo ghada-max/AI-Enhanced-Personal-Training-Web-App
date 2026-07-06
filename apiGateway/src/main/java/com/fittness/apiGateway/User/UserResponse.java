@@ -1,12 +1,8 @@
-package com.fittness.userservice.dto;
+package com.fittness.apiGateway.User;
 
-import com.fittness.userservice.UserRole;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -24,8 +20,4 @@ public class UserResponse {
     private String lastname;
     private LocalDateTime createAt;
     private LocalDateTime updatedAt;
-
-    public UserResponse() {
-
-    }
 }
